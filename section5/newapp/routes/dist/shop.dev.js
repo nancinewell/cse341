@@ -14,9 +14,10 @@ router.get('/', function (req, res, next) {
   var products = adminData.products;
   res.render('shop', {
     prods: products,
-    docTitle: 'Shop',
+    pageTitle: 'Shop',
     path: '/',
-    hasProducts: products.length > 0
+    hasProducts: products.length > 0,
+    activeShop: true
   });
 });
 module.exports = router;

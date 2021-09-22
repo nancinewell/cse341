@@ -6,14 +6,14 @@ var path = require('path');
 
 var bodyParser = require('body-parser');
 
-var express = require('express');
+var express = require('express'); //const expressHbs = require('express-handlebars');
 
-var expressHbs = require('express-handlebars');
 
-var app = express();
-app.engine('hbs', expressHbs);
-app.set('view engine', 'hbs'); //app.set('view engine', 'pug');
+var app = express(); //app.engine('hbs', expressHbs({layoutsDir: 'views/layouts', defaultLayout: 'main-layout', extname: 'hbs'}));// 'views/layouts' is the default. Reset it if you need to use a different location
+//app.set('view engine', 'hbs');
+//app.set('view engine', 'pug');
 
+app.set('view engine', 'ejs');
 app.set('views', 'views'); //views is actually the default. Be sure to set this if you use another folder. 
 
 var adminData = require('./routes/admin');

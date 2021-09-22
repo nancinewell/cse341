@@ -1,4 +1,7 @@
-
+<%- include('includes/head.ejs') %>
+</head>
+<body>
+    <%- include('includes/nav.ejs') %>
     <main>
         <form class="product-form" action="/add-product" method="POST">
             <div class="form-control">
@@ -8,3 +11,4 @@
             </div>
         </form>
     </main>
+    <%- include('includes/end.ejs') %>

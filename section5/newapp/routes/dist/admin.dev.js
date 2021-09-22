@@ -12,7 +12,8 @@ var products = []; //Add Product - GET
 router.get('/add-product', function (req, res, next) {
   res.render('add-product', {
     pageTitle: 'Add Product',
-    path: '/add-product'
+    path: '/add-product',
+    activeAddProduct: true
   });
 }); //Add Product - POST
 
