@@ -1,0 +1,18 @@
+extends layouts/main-layout.pug 
+
+block content
+    if prods.length > 0 
+        .grid 
+            each product in prods
+                article.card.product-item 
+                    header.card_header 
+                        h1.product_title #{product.title} 
+                    .card_image 
+                        img(src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.jT0HQ_Nw1IS7F6-RwhWx4wHaHa%26pid%3DApi&f=1", alt="Great Book" width="300px")
+                    .card_content 
+                        h2.product_price $19.99
+                        p.product_description A very interesting book! My favorite!
+                    .card_actions 
+                        button.btn Add to Cart
+    else    
+        h1 No Products
