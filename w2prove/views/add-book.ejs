@@ -2,22 +2,35 @@
 </head>
 <body>
     <%- include('includes/header.ejs')%>
-<main>
-    <form method="post" action="/add-book">
+<main class="main-form">
+    <div></div>
+    <form method="post" action="/add-book" class="user-form">
         <fieldset>
             <legend>Add A Book</legend>
-            <label for="title">Title</label>
-            <input type="text" placeholder="Ender's Game" name="title" required>
-            <label for="author">Title</label>
-            <input type="text" placeholder="Orson Scott Card" name="author" required>
-            <label for="price">Title</label>
-            <input type="text" placeholder="18.99" name="price" required>
-            <label for="desc">Title</label>
-            <input type="text" placeholder="Science fiction about a boy who fights a galactic war." name="desc" required>
-            <label for="image">Title</label>
-            <input type="text" placeholder="https://www0.alibris-static.com/enders-game/isbn/9780812550702.gif" name="image" required>
-            <button type="submit">Add to Library</button>
+            <div class="label-input">
+                <label for="title">Title</label>
+                <input type="text" placeholder="Ender's Game" name="title" required >
+            </div>
+            <div class="label-input">
+                <label for="author">Author</label>
+                <input type="text" placeholder="Orson Scott Card" name="author" required>
+            </div>
+            <div class="label-input">
+                <label for="price">Price</label>
+                <input type="text" placeholder="18.99" name="price" required>
+            </div>
+            <div class="label-input">
+                <label for="description">Description</label>
+                <input type="text" placeholder="Science fiction about a boy who fights a galactic war." name="description" required>
+            </div>
+            <div class="label-input">
+                <label for="image">Link to Image</label>
+                <input type="text" placeholder="https://www0.alibris-static.com/enders-game/isbn/9780812550702.gif" name="image" required>
+            </div>
+            <button type="submit" class="submit-button">Add to Library</button>
         </fieldset>
     </form>
+
+    <div id="happy-image"></div>
 </main>
 <%- include('includes/footer.ejs')%>

@@ -1,9 +1,16 @@
 <%- include('includes/head.ejs')%>
 </head>
 <body>
-<%- include('includes/header.ejs')%>
+    <header class="main-header">
+        <nav class="main-nav">
+            <ul class="main-nav-ul">
+                <li class="main-nav-li"><a href="/">Library</a></li>
+                <li class="main-nav-li"><a href="/add-book">Add Book</a></li>
+            </ul>
+        </nav>
+    </header>
 <main>
-<img src="../public/images/404.png" alt="Image of confused girl due to 404 error.">
-<p>Ummm... Not sure what you were expecting, but there's nothing here.</p>
+<div id="confused-image"></div>
+<h1 class="error">Ummm... Not sure what you were expecting, but there's nothing here.</h1>
 </main>
 <%- include('includes/footer.ejs')%>

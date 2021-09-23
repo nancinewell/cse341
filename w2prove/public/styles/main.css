@@ -1,26 +1,221 @@
 /* * * * * * COLORS * * * * *
-Orange: #f18f01
-Blue: #048ba8
-Navy: #2e4057
-Green: #99c24d
-Brown: #2f2d2e
+Navy: rgb(5,19,58)
+Blue: 
+Light Blue: rgb(209,220,250);
+Green: rgb(84,110,13);
+Red: rgb(157,32,50);
 */
-@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&family=Poppins:wght@200;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arapey&display=swap&family=Poppins:wght@200;400;600&display=swap');
 
+/* * * * * * * * * * * * GENERAL * * * * * * * * * * */
 body{
     font-family: 'Poppins', sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6{
-    font-family: 'Merienda', cursive;
+    font-family: 'Arapey', serif;
 }
-/* * * * * * GENERAL * * * * */
 
-/* * * * * * LINKS * * * * */
+/* * * * * * * * * * * * HEADER * * * * * * * * * * */
 
-/* * * * * * lAYOUT * * * * */
+.main-header{
+    background-color: rgb(5,19,58);
+    color: rgb(209,220,250);
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
 
-/* * * * * * CARDS * * * * */
+.main-nav-ul{
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+}
 
+.main-nav-li{
+    list-style: none;
+    margin: 0 3rem 0 0;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
 
+.main-nav-li a{
+    color: rgb(209,220,250);
+    text-decoration: none;
+}
+
+.main-nav-li a.active{
+    color: #fff;
+    font-weight: 600;
+}
+
+.main-nav-li:hover{
+    transform: scale(1.1);
+}
+
+.error{
+text-align: center;
+}
+/* * * * * * * * * * * * LINKS (GENERAL)* * * * * * * * * * */
+
+/* * * * * * * * * * * * MAIN * * * * * * * * * * */
+
+main{
+    height: 70vh;
+    padding: 2rem;
+    flex: 1;
+}
+
+.main-form{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
+}
+
+/* * * * * * * * * * * * FOOTER * * * * * * * * * * */
+
+footer{
+    background-color: rgb(5,19,58);
+    color: rgb(209,220,250);
+    width: 100vw;
+    padding: .5rem 2rem;
+    display: flex;
+}
+
+#footer-image{
+    background-image: url(../images/happy.png);
+    background-size: cover;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+footer p{
+    margin-left: 1.5rem;
+}
+/* * * * * * * * * * * * FORM * * * * * * * * * * */
+form.user-form {
+    width: 75vw;
+    max-width: 20rem;
+}
+
+fieldset{
+padding: 1rem;
+border-radius: 5px;
+}
+
+legend{
+    font-family: 'Arapey', serif;
+    font-size: 1.75rem;
+}   
+
+.label-input{
+display: flex;
+flex-direction: column;
+margin-top: 1rem;
+}
+
+.label-input input{
+    border-radius: 5px;
+    border: 1px solid rgb(5,19,58);
+    padding: .25rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-form input, .search-button{
+    border-radius: 5px;
+    border: 1px solid rgb(5,19,58);
+    padding: .25rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-form input{
+    width: 20rem;
+    padding-left: .5rem;
+}
+
+.search-button{
+    background-color: rgb(84,110,13);
+    color: #fff;
+    width: 6rem;
+    font-weight: 600;
+}
+
+.search-button:hover{
+    background-color: #fff;
+    color: rgb(84,110,13);
+    transition: 0.3s;
+}
+
+.submit-button, .delete-form>button{
+    border-radius: 5px;
+    border: 1px solid rgb(5,19,58);
+    padding: .25rem;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 1rem;
+    width: 100%;
+    background-color: rgb(84,110,13);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: 0.3s;
+}
+
+.submit-button:hover{
+    background-color: rgb(5,19,58);
+
+}
+/* * * * * * * * * * * * CARDS * * * * * * * * * * */
+.library-cards{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-article{
+    border-radius: 15px;
+    box-shadow: 5px 5px 2px #a7a7a7;
+    border: 1px solid #a7a7a7;
+    width: 15rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    
+}
+.card-article>header>h2, .card-article>header>h3, .card-article>h4 {
+margin: .5rem;
+}
+
+.delete-form>button{
+    background-color: rgb(157,32,50);
+    
+}
+
+.card-img{
+    margin: .5rem auto;
+    max-width: 80%;
+}
+
+/* * * * * * * * * * * * MISC * * * * * * * * * * */
+#confused-image{
+    background-image: url(../images/404.png);
+    background-size: cover;
+    width: 30rem;
+    height: 30rem;
+    margin: auto;
+}
+
+#happy-image{
+    background-image: url(../images/happy-book.png);
+    background-size: cover;
+    width: 30rem;
+    height: 30rem;
+}
 

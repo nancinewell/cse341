@@ -1,8 +1,12 @@
-<header>
-    <nav>
-        <ul>
-            <li><a class="<%= path === '/' ? 'active': '' %>" href="/">Library</a></li>
-            <li><a class="<%= path === '/add-book' ? 'active': '' %>" href="/add-book">Add Book</a></li>
+<header class="main-header">
+    <nav class="main-nav">
+        <ul class="main-nav-ul">
+            <li class="main-nav-li"><a class="<%= path === '/' ? 'active': '' %>" href="/">Library</a></li>
+            <li class="main-nav-li"><a class="<%= path === '/add-book' ? 'active': '' %>" href="/add-book">Add Book</a></li>
         </ul>
     </nav>
+    <form class="search-form" method="post" action="/search">
+        <input type="text" name="search" placeholder="Search by title or author">
+        <button type="submit" class= "search-button">Search</button>
+    </form>
 </header>
