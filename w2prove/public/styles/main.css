@@ -1,0 +1,26 @@
+/* * * * * * COLORS * * * * *
+Orange: #f18f01
+Blue: #048ba8
+Navy: #2e4057
+Green: #99c24d
+Brown: #2f2d2e
+*/
+@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&family=Poppins:wght@200;400;600&display=swap');
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Merienda', cursive;
+}
+/* * * * * * GENERAL * * * * */
+
+/* * * * * * LINKS * * * * */
+
+/* * * * * * lAYOUT * * * * */
+
+/* * * * * * CARDS * * * * */
+
+
+
