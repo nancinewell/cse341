@@ -1,0 +1,30 @@
+After completing the assignment, be sure to push to Github and Heroku.
+Please answer the questions in this text file and submit it to I-Learn.
+
+1. Copy and paste the URL for your web application (e.g., Heroku): 
+	https://nnewellbooks.herokuapp.com/add-bookhttps://nnewellbooks.herokuapp.com/add-book
+
+2. Copy and paste the URL for your source code repository (e.g., GitHub):
+	https://github.com/nancinewell/cse341w2prove
+
+3. Briefly list and describe the elements of the application that are functioning.
+	Multiple routes, receives and uses multiple fields for new books, books can be deleted, books can be searched by title or author
+
+4. Briefly describe any pieces of the assignment that are not yet working correctly.
+	None that I am aware of
+
+5. Briefly describe the "coolest" thing you learned while completing this assignment.
+	How to use EJS to make modules (includes)! I've done it in PHP, but didn't know there was a way to do it with JS.	
+
+6. If you could change this assignment to be more effective or helpful, what would you change? 
+	Don't bother with Handlebars. It was nothing but a pain.
+
+7. Please select the category you feel best describes your assignment: 5
+   1 - Some attempt was made
+   2 - Developing, but significantly deficient
+   3 - Slightly deficient, but still mostly adequate
+   4 - Meets requirements
+   5 - Shows creativity and excels above and beyond requirements
+
+8. Provide a brief justification (1-2 sentences) for selecting that category.
+	In my effort to excel, I did not use my code from the tutorial, but started again from scratch to ensure a better understanding of my app. I added the extra fields as it suggested, and then implemented a search bar that would function on title or author, and found a different way to locate the book index in order to delete it than we did as a team.
