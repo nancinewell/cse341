@@ -30,6 +30,14 @@ exports.getCart = (req, res, next) => {
     });
 }
 
+// * * * * * * * GET ORDERS * * * * * * * 
+exports.getOrders = (req, res, next) => {
+    res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders'
+    });
+}
+
 // * * * * * * * GET CHECKOUT * * * * * * * 
 exports.getCheckout = (req, res, next) => {
     res.render('shop/checkout', {

@@ -30,6 +30,14 @@ exports.getCart = function (req, res, next) {
     path: '/cart',
     pageTitle: 'Your Cart'
   });
+}; // * * * * * * * GET ORDERS * * * * * * * 
+
+
+exports.getOrders = function (req, res, next) {
+  res.render('shop/orders', {
+    path: '/orders',
+    pageTitle: 'Your Orders'
+  });
 }; // * * * * * * * GET CHECKOUT * * * * * * * 
 
 
