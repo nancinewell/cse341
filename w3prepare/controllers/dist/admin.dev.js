@@ -15,7 +15,11 @@ exports.getAddProduct = function (req, res, next) {
 
 
 exports.postAddProduct = function (req, res, next) {
-  var product = new Product(req.body.title);
+  var title = req.body.title;
+  var imgURL = req.body.imgURL;
+  var price = req.body.price;
+  var desc = req.body.desc;
+  var product = new Product(title, imgURL, price, desc);
   product.save();
   res.redirect('/');
 }; // * * * * * * * GET PRODUCTS * * * * * * * 

@@ -25,10 +25,13 @@ var getProductsFromFile = function getProductsFromFile(cb) {
 module.exports =
 /*#__PURE__*/
 function () {
-  function Product(title) {
+  function Product(title, imgURL, desc, price) {
     _classCallCheck(this, Product);
 
     this.title = title;
+    this.imgURL = imgURL;
+    this.desc = desc;
+    this.price = price;
   }
 
   _createClass(Product, [{
