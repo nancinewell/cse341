@@ -1,7 +1,8 @@
 "use strict";
 
-var Product = require('../models/product'); // * * * * * * * GET PRODUCTS * * * * * * * 
+var Product = require('../models/product');
 
+var Cart = require('../models/cart');
 
 exports.getProducts = function (req, res, next) {
   Product.fetchAll(function (products) {
@@ -11,8 +12,19 @@ exports.getProducts = function (req, res, next) {
       path: '/products'
     });
   });
-}; // * * * * * * * GET INDEX * * * * * * * 
+};
 
+exports.getProduct = function (req, res, next) {
+  var prodId = req.params.productId;
+  console.log("in controller-getProduct- prodId: " + prodId);
+  Product.findById(prodId, function (product) {
+    res.render('shop/product-detail', {
+      product: product,
+      pageTitle: product.title,
+      path: '/products'
+    });
+  });
+};
 
 exports.getIndex = function (req, res, next) {
   Product.fetchAll(function (products) {
@@ -22,24 +34,30 @@ exports.getIndex = function (req, res, next) {
       path: '/'
     });
   });
-}; // * * * * * * * GET CART * * * * * * * 
-
+};
 
 exports.getCart = function (req, res, next) {
   res.render('shop/cart', {
     path: '/cart',
     pageTitle: 'Your Cart'
   });
-}; // * * * * * * * GET ORDERS * * * * * * * 
+};
 
+exports.postCart = function (req, res, next) {
+  var prodId = req.body.productId;
+  console.log("shop.js controller  exports.postCart prodId: " + prodId);
+  Product.findById(prodId, function (product) {
+    Cart.addProduct(prodId, product.price);
+  });
+  res.redirect('/cart');
+};
 
 exports.getOrders = function (req, res, next) {
   res.render('shop/orders', {
     path: '/orders',
     pageTitle: 'Your Orders'
   });
-}; // * * * * * * * GET CHECKOUT * * * * * * * 
-
+};
 
 exports.getCheckout = function (req, res, next) {
   res.render('shop/checkout', {
