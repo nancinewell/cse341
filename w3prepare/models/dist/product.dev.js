@@ -1,5 +1,13 @@
 "use strict";
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -25,9 +33,10 @@ var getProductsFromFile = function getProductsFromFile(cb) {
 module.exports =
 /*#__PURE__*/
 function () {
-  function Product(title, imageUrl, description, price) {
+  function Product(id, title, imageUrl, description, price) {
     _classCallCheck(this, Product);
 
+    this.id = id;
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
@@ -39,13 +48,26 @@ function () {
     value: function save() {
       var _this = this;
 
-      this.id = Math.random();
-      console.log("this.id: " + this.id);
       getProductsFromFile(function (products) {
-        products.push(_this);
-        fs.writeFile(p, JSON.stringify(products), function (err) {
-          console.log("Error: ".concat(err));
-        });
+        if (_this.id) {
+          var existingProductIndex = products.findIndex(function (prod) {
+            return parseFloat(prod.id) === parseFloat(_this.id);
+          });
+          console.log("existingProductIndex = " + existingProductIndex);
+
+          var updatedProducts = _toConsumableArray(products);
+
+          updatedProducts[existingProductIndex] = _this;
+          fs.writeFile(p, JSON.stringify(updatedProducts), function (err) {
+            console.log(err);
+          });
+        } else {
+          _this.id = Math.random().toString();
+          products.push(_this);
+          fs.writeFile(p, JSON.stringify(products), function (err) {
+            console.log(err);
+          });
+        }
       });
     }
   }], [{
@@ -59,8 +81,8 @@ function () {
       getProductsFromFile(function (products) {
         var product = products.find(function (p) {
           return parseFloat(p.id) === parseFloat(id);
-        });
-        console.log("in Product Model- findById - product:" + product);
+        }); //const product = products.find(p => p.id === id);
+
         cb(product);
       });
     }
