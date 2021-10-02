@@ -46,7 +46,6 @@ exports.getEditProduct = (req, res, next) => {
       product: product
     });
   })
-  
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -59,3 +58,15 @@ exports.postEditProduct = (req, res, next) => {
   updatedProduct.save();
   res.redirect('/admin/products');
 }
+
+exports.postDeleteProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.deleteById(prodId);
+  res.redirect('/admin/products');
+  };
+
+
+  
+    
+
+  

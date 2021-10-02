@@ -1,0 +1,30 @@
+After completing the assignment, be sure to push to Github and Heroku.
+Please answer the questions in this text file and submit it to I-Learn.
+
+1. Copy and paste the URL for your web application (e.g., Heroku): 
+	https://newell-ecommerce.herokuapp.com/
+
+2. Copy and paste the URL for your source code repository (e.g., GitHub):
+	https://github.com/nancinewell/cse341EcommerceProject
+
+3. Briefly list and describe the elements of the application that are functioning. 
+	MVC elements, add to cart, remove from cart, add product, remove product
+
+4. Briefly describe any pieces of the assignment that are not yet working correctly.
+	None to my knowledge
+
+5. Briefly describe the "coolest" thing you learned while completing this assignment.
+	How easy it is to create a cart! I always thought it'd be something terribly complicated, but it's really just another class that you add and remove things from.
+
+6. If you could change this assignment to be more effective or helpful, what would you change?
+	This was a very time consuming assignment. I spent much more than the estimated 9-12 hours this week.
+	Clearer expectations on this week's assignment would be good. One place said following the tutorial will get you 93% there, but the assignment doesn't call for a cart of other things we learned about this week. Does that mean they're not expected? And if so, wouldn't turning in the code for the entire tutorial include things above and beyond expectations? 
+
+7. Please select the category you feel best describes your assignment:5
+   1 - Some attempt was made
+   2 - Developing, but significantly deficient
+   3 - Slightly deficient, but still mostly adequate
+   4 - Meets requirements
+   5 - Shows creativity and excels above and beyond requirements
+
+8. Provide a brief justification (1-2 sentences) for selecting that category. I employed a way to ensure unique id numbers on all items added, added a search function, designed mobile first, and implemented new code to ensure the modules would work properly despite being accessed from pages of varying relative locations.Additionally, to help me better learn the material, I did not use the code I created during the tutorial- I started from scratch.

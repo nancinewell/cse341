@@ -36,7 +36,7 @@ function () {
   _createClass(Cart, null, [{
     key: "addProduct",
     value: function addProduct(id, productPrice) {
-      //Fetch previous cart
+      // Fetch the previous cart
       fs.readFile(p, function (err, fileContent) {
         var cart = {
           products: [],
@@ -45,14 +45,14 @@ function () {
 
         if (!err) {
           cart = JSON.parse(fileContent);
-        } //analyze cart to find existing
+        } // Analyze the cart => Find existing product
 
 
         var existingProductIndex = cart.products.findIndex(function (prod) {
           return prod.id === id;
         });
         var existingProduct = cart.products[existingProductIndex];
-        var updatedProduct; //add new product/increase qty
+        var updatedProduct; // Add new product/ increase quantity
 
         if (existingProduct) {
           updatedProduct = _objectSpread({}, existingProduct);
@@ -68,10 +68,50 @@ function () {
         }
 
         cart.totalPrice = cart.totalPrice + +productPrice;
-        cart.products = _toConsumableArray(cart.products);
         fs.writeFile(p, JSON.stringify(cart), function (err) {
           console.log(err);
         });
+      });
+    }
+  }, {
+    key: "deleteProduct",
+    value: function deleteProduct(id, productPrice) {
+      fs.readFile(p, function (err, fileContent) {
+        if (err) {
+          return;
+        }
+
+        var updatedCart = _objectSpread({}, JSON.parse(fileContent));
+
+        var product = updatedCart.products.find(function (prod) {
+          return parseFloat(prod.id) === parseFloat(id);
+        });
+
+        if (!product) {
+          return;
+        }
+
+        var productQty = product.qty;
+        updatedCart.totalPrice = updatedCart.totalPrice - productPrice * productQty;
+        updatedCart.products = updatedCart.products.filter(function (prod) {
+          return parseFloat(prod.id) !== parseFloat(id);
+        });
+        fs.writeFile(p, JSON.stringify(updatedCart), function (err) {
+          console.log(err);
+        });
+      });
+    }
+  }, {
+    key: "getCart",
+    value: function getCart(cb) {
+      fs.readFile(p, function (err, fileContent) {
+        var cart = JSON.parse(fileContent);
+
+        if (err) {
+          cb(null);
+        } else {
+          cb(cart);
+        }
       });
     }
   }]);

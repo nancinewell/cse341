@@ -14,11 +14,16 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var _require = require('console'),
+    Console = _require.Console;
+
 var fs = require('fs');
 
 var path = require('path');
 
 var p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
+
+var Cart = require('./cart');
 
 var getProductsFromFile = function getProductsFromFile(cb) {
   fs.readFile(p, function (err, fileContent) {
@@ -71,6 +76,23 @@ function () {
       });
     }
   }], [{
+    key: "deleteById",
+    value: function deleteById(id) {
+      getProductsFromFile(function (products) {
+        var product = products.find(function (prod) {
+          return prod.id === id;
+        });
+        var updatedProducts = products.filter(function (prod) {
+          return prod.id !== id;
+        });
+        fs.writeFile(p, JSON.stringify(updatedProducts), function (err) {
+          if (!err) {
+            Cart.deleteProduct(id, product.price);
+          }
+        });
+      });
+    }
+  }, {
     key: "fetchAll",
     value: function fetchAll(cb) {
       getProductsFromFile(cb);
