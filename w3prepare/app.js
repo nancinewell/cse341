@@ -3,6 +3,10 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const errorController = require('./controllers/error');
+const mongoConnect = require('./util/database').mongoConnect;
+const User = require('./models/user');
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -14,11 +18,20 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+  User.findById("615b67ef8853cbdf75f025cc")
+    .then(user => {
+      req.user = new User(user.name, user.email, user.cart, user._id);
+      next();
+    })
+    .catch(err => console.log(`Error: ${err}`));
+});
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: 'Page Not Found', path: '404' });
-});
+app.use(errorController.get404);
 
-app.listen(3000);
+mongoConnect(() => {
+  app.listen(3000);
+});

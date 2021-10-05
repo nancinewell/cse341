@@ -1,114 +1,97 @@
 "use strict";
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var _require = require('console'),
-    Console = _require.Console;
+var mongodb = require('mongodb');
 
-var fs = require('fs');
+var getDb = require('../util/database').getDb;
 
-var path = require('path');
-
-var p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
-
-var Cart = require('./cart');
-
-var getProductsFromFile = function getProductsFromFile(cb) {
-  fs.readFile(p, function (err, fileContent) {
-    if (err) {
-      cb([]);
-    } else {
-      cb(JSON.parse(fileContent));
-    }
-  });
-};
-
-module.exports =
+var Product =
 /*#__PURE__*/
 function () {
-  function Product(id, title, imageUrl, description, price) {
+  function Product(title, price, description, imageUrl, id, userId) {
     _classCallCheck(this, Product);
 
-    this.id = id;
     this.title = title;
-    this.imageUrl = imageUrl;
-    this.description = description;
     this.price = price;
+    this.description = description;
+    this.imageUrl = imageUrl;
+    this._id = id ? new mongodb.ObjectId(id) : null;
+    this.userId = userId;
   }
 
   _createClass(Product, [{
     key: "save",
     value: function save() {
-      var _this = this;
+      //connect to the db
+      var db = getDb();
+      var dbOp;
 
-      getProductsFromFile(function (products) {
-        if (_this.id) {
-          var existingProductIndex = products.findIndex(function (prod) {
-            return parseFloat(prod.id) === parseFloat(_this.id);
-          });
-          console.log("existingProductIndex = " + existingProductIndex);
+      if (this._id) {
+        //update
+        dbOp = db.collection('products').updateOne({
+          _id: this._id
+        }, {
+          $set: this
+        });
+      } else {
+        return dbOp = db.collection('products').insertOne(this);
+      } //tell mongodb what collection to work with. if it doesn't exist, it'll be created on the fly
 
-          var updatedProducts = _toConsumableArray(products);
 
-          updatedProducts[existingProductIndex] = _this;
-          fs.writeFile(p, JSON.stringify(updatedProducts), function (err) {
-            console.log(err);
-          });
-        } else {
-          _this.id = Math.random().toString();
-          products.push(_this);
-          fs.writeFile(p, JSON.stringify(products), function (err) {
-            console.log(err);
-          });
-        }
+      return dbOp.then(function (result) {
+        console.log("Result of Product.save(): ".concat(result));
+      })["catch"](function (err) {
+        console.log("Error: ".concat(err));
       });
     }
   }], [{
-    key: "deleteById",
-    value: function deleteById(id) {
-      getProductsFromFile(function (products) {
-        var product = products.find(function (prod) {
-          return prod.id === id;
-        });
-        var updatedProducts = products.filter(function (prod) {
-          return prod.id !== id;
-        });
-        fs.writeFile(p, JSON.stringify(updatedProducts), function (err) {
-          if (!err) {
-            Cart.deleteProduct(id, product.price);
-          }
-        });
+    key: "fetchAll",
+    value: function fetchAll() {
+      var db = getDb(); //.find({title: 'A Book Title'})   use to filter!
+      //.find().toArray() to send it to an array
+
+      return db.collection('products').find().toArray() //returns a promise
+      .then(function (products) {
+        //console.log(products);
+        return products;
+      })["catch"](function (err) {
+        console.log("Error: %{err}");
       });
     }
   }, {
-    key: "fetchAll",
-    value: function fetchAll(cb) {
-      getProductsFromFile(cb);
+    key: "findById",
+    value: function findById(prodId) {
+      var db = getDb();
+      return db.collection('products').find({
+        _id: new mongodb.ObjectId(prodId)
+      }) // create a new object id of MongoDB's type to compare the existing mongodb id to.
+      .next().then(function (product) {
+        //console.log(product);
+        return product;
+      })["catch"](function (err) {
+        console.log("Error: %{err}");
+      });
     }
   }, {
-    key: "findById",
-    value: function findById(id, cb) {
-      getProductsFromFile(function (products) {
-        var product = products.find(function (p) {
-          return parseFloat(p.id) === parseFloat(id);
-        }); //const product = products.find(p => p.id === id);
-
-        cb(product);
+    key: "deleteById",
+    value: function deleteById(prodId) {
+      var db = getDb();
+      return db.collection('products').deleteOne({
+        _id: new mongodb.ObjectId(prodId)
+      }).then(function () {
+        console.log("deleted");
+      })["catch"](function (err) {
+        console.log(err);
       });
     }
   }]);
 
   return Product;
 }();
+
+module.exports = Product;

@@ -1,78 +1,86 @@
-const { Console } = require('console');
-const fs = require('fs');
-const path = require('path');
+const mongodb = require('mongodb');
+const getDb = require('../util/database').getDb;
 
-const p = path.join(
-  path.dirname(process.mainModule.filename),
-  'data',
-  'products.json'
-);
-
-const Cart = require('./cart');
-
-const getProductsFromFile = cb => {
-  fs.readFile(p, (err, fileContent) => {
-    if (err) {
-      cb([]);
-    } else {
-      cb(JSON.parse(fileContent));
-    }
-  });
-};
-
-
-
-module.exports = class Product {
-  constructor(id, title, imageUrl, description, price) {
-    this.id = id;
+class Product {
+  constructor(title, price, description, imageUrl, id, userId){
     this.title = title;
-    this.imageUrl = imageUrl;
-    this.description = description;
     this.price = price;
-  }
-  
-  save() {
-    getProductsFromFile(products => {
-      if (this.id) {
-        const existingProductIndex = products.findIndex(
-          prod => parseFloat(prod.id) === parseFloat(this.id)
-        );
-        console.log("existingProductIndex = " + existingProductIndex);
-        const updatedProducts = [...products];
-        updatedProducts[existingProductIndex] = this;
-        fs.writeFile(p, JSON.stringify(updatedProducts), err => {
-          console.log(err);
-        });
-      } else {
-        this.id = Math.random().toString();
-        products.push(this);
-        fs.writeFile(p, JSON.stringify(products), err => {
-          console.log(err);
-        });
-      }
-    });
-  }
+    this.description = description;
+    this.imageUrl = imageUrl;
+    this._id = id ? new mongodb.ObjectId(id) : null;
+    this.userId = userId;
+  }  
 
-  static deleteById(id) {
-    getProductsFromFile(products => {
-      const product = products.find(prod => prod.id === id);
-      const updatedProducts = products.filter(prod => prod.id !== id);
-      fs.writeFile(p, JSON.stringify(updatedProducts), err => {
-        if (!err) {
-          Cart.deleteProduct(id, product.price);
-        }
-      });
-    });
-  }
-  static fetchAll(cb) {
-    getProductsFromFile(cb);
-  }
-
-  static findById(id, cb){
-    getProductsFromFile(products => {
-    const product = products.find(p => parseFloat(p.id) === parseFloat(id));
-    //const product = products.find(p => p.id === id);
-    cb(product);
+  save(){
+    //connect to the db
+    const db = getDb(); 
+    let dbOp;
+    if(this._id){
+      //update
+      dbOp = db.collection('products').updateOne({_id: this._id}, {$set: this});
+    } else {
+      return dbOp = db
+      .collection('products')
+      .insertOne(this);
+    }
+    
+    //tell mongodb what collection to work with. if it doesn't exist, it'll be created on the fly
+    return dbOp
+    .then(result => {
+      console.log(`Result of Product.save(): ${result}`);
     })
+    .catch(err => {
+      console.log(`Error: ${err}`); 
+    });
+  
   }
-};
+
+  static fetchAll(){
+
+    const db = getDb(); 
+    //.find({title: 'A Book Title'})   use to filter!
+    //.find().toArray() to send it to an array
+    return db
+      .collection('products')
+      .find()
+      .toArray() //returns a promise
+      .then(products => {
+        //console.log(products);
+        return products;
+      })
+      .catch(err => {
+        console.log(`Error: %{err}`);
+      })
+  }
+
+  static findById(prodId){
+    const db = getDb();
+    return db.collection('products')
+      .find({_id: new mongodb.ObjectId(prodId)})// create a new object id of MongoDB's type to compare the existing mongodb id to.
+      .next()
+      .then(product => {
+        //console.log(product);
+        return product;
+      })
+      .catch(err => {
+        console.log(`Error: %{err}`);
+      })
+
+  }
+
+
+    static deleteById(prodId){
+      const db = getDb();
+      return db.collection('products')
+        .deleteOne({_id: new mongodb.ObjectId(prodId)})
+        .then(() => {
+          console.log("deleted");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+}
+
+
+module.exports = Product;
