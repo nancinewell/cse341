@@ -1,5 +1,17 @@
 "use strict";
 
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["postOrder req.user: ", ""]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 var Product = require('../models/product');
 
 var User = require('../models/user');
@@ -73,7 +85,8 @@ exports.postCartDeleteProduct = function (req, res, next) {
 };
 
 exports.postOrder = function (req, res, next) {
-  var fetchedCart;
+  console.log(_templateObject(), req.user);
+  console.log("req.user._id: ".concat(req.user._id));
   req.user.addOrder().then(function (result) {
     res.redirect('/orders');
   })["catch"](function (err) {

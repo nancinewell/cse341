@@ -55,11 +55,7 @@ function () {
     value: function save() {
       //connect to the db
       var db = getDb();
-      return dbOp = db.collection('users').insertOne({
-        _id: this._id
-      }, {
-        $set: this
-      });
+      return db.collection('users').insertOne(this);
     }
   }, {
     key: "addToCart",
@@ -77,7 +73,7 @@ function () {
       } else {
         updatedCartItems.push({
           productId: new ObjectId(product._id),
-          quantity: 1
+          quantity: newQuantity
         });
       }
 
@@ -143,7 +139,7 @@ function () {
         var order = {
           items: products,
           user: {
-            _id: new ObjectId(_this2.id),
+            _id: new ObjectId(_this2._id),
             name: _this2.username
           }
         };
@@ -178,7 +174,8 @@ function () {
       return db.collection('users').findOne({
         _id: new ObjectId(userId)
       }).then(function (user) {
-        console.log(_templateObject(), user);
+        console.log(_templateObject(), user); //WHHHAAATTT??? I just called console.log without parentheses!
+
         return user;
       })["catch"](function (err) {
         console.log("Error: ".concat(err));

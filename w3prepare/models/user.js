@@ -14,7 +14,7 @@ class User {
     save(){
         //connect to the db
         const db = getDb(); 
-        return dbOp = db.collection('users').insertOne({_id: this._id}, {$set: this});
+        return db.collection('users').insertOne(this);
     }
 
     addToCart(product){
@@ -28,7 +28,7 @@ class User {
             newQuantity = this.cart.items[cartProductIndex].quantity +1;
             updatedCartItems[cartProductIndex].quantity = newQuantity
         } else {
-            updatedCartItems.push({ productId: new ObjectId(product._id), quantity: 1});
+            updatedCartItems.push({ productId: new ObjectId(product._id), quantity: newQuantity});
         }
 
         const updatedCart = {items: updatedCartItems};
@@ -78,9 +78,10 @@ class User {
             const order = {
                 items: products,
                 user: {
-                    _id: new ObjectId(this.id),
+                    _id: new ObjectId(this._id),
                     name: this.username
                 }
+                
             };
             return db.collection('orders').insertOne(order);
         })
@@ -109,7 +110,7 @@ class User {
         .collection('users')
         .findOne({_id: new ObjectId(userId)})
         .then(user => {
-            console.log`findById- User: ${user}`;
+            console.log`findById- User: ${user}`; //WHHHAAATTT??? I just called console.log without parentheses!
             return user;
         })
         .catch(err => {console.log(`Error: ${err}`)});
