@@ -2,13 +2,13 @@
 
 var path = require('path');
 
+var mongoose = require('mongoose');
+
 var express = require('express');
 
 var bodyParser = require('body-parser');
 
 var errorController = require('./controllers/error');
-
-var mongoConnect = require('./util/database').mongoConnect;
 
 var User = require('./models/user');
 
@@ -25,9 +25,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express["static"](path.join(__dirname, 'public')));
 app.use(function (req, res, next) {
-  User.findById("615b67ef8853cbdf75f025cc").then(function (user) {
-    req.user = new User(user.name, user.email, user.cart, user._id); //console.log(`app.use User.findById() USER ID: ${req.user._id}`);
-
+  User.findById("615c4e27045748fae3cc7093").then(function (user) {
+    req.user = user;
     next();
   })["catch"](function (err) {
     return console.log("Error: ".concat(err));
@@ -36,6 +35,21 @@ app.use(function (req, res, next) {
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(errorController.get404);
-mongoConnect(function () {
+mongoose.connect('mongodb+srv://nodeuser:p1ngpong@cluster0.f2qqp.mongodb.net/shop?retryWrites=true&w=majority').then(function (result) {
+  User.findOne().then(function (user) {
+    if (!user) {
+      var _user = new User({
+        name: 'AdminUser',
+        email: 'admin@email.com',
+        cart: {
+          items: []
+        }
+      });
+
+      _user.save();
+    }
+  });
   app.listen(3000);
+})["catch"](function (err) {
+  console.log("Error: ".concat(err));
 });

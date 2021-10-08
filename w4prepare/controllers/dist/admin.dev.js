@@ -14,9 +14,18 @@ exports.postAddProduct = function (req, res, next) {
   var title = req.body.title;
   var imageUrl = req.body.imageUrl;
   var price = req.body.price;
-  var description = req.body.description;
-  var userId = req.user._id;
-  var product = new Product(title, price, description, imageUrl, null, userId);
+  var description = req.body.description; //const userId = req.user._id;
+  //map values defined in schema    schema: local variables
+
+  var product = new Product({
+    title: title,
+    price: price,
+    description: description,
+    imageUrl: imageUrl,
+    userId: req.user // Mongoose will simply pick out the id from the user. Or you can specify: req.user._id 
+
+  }); //.save() is native to mongoose
+
   product.save().then(function (result) {
     console.log('Created Product');
     res.redirect('/admin/products');
@@ -26,7 +35,9 @@ exports.postAddProduct = function (req, res, next) {
 };
 
 exports.getProducts = function (req, res, next) {
-  Product.fetchAll().then(function (products) {
+  Product.find() //.select('title price -_id') //define which fields should be returned. list items desired, -item for exclusions
+  //.populate('userId', 'name')//Mongoose will populate a field with all of the details instead of just the id!
+  .then(function (products) {
     res.render('admin/products', {
       prods: products,
       pageTitle: 'Admin Products',
@@ -67,8 +78,13 @@ exports.postEditProduct = function (req, res, next) {
   var updatedPrice = req.body.price;
   var updatedDesc = req.body.description;
   var updatedImageUrl = req.body.imageUrl;
-  var product = new Product(updatedTitle, updatedPrice, updatedDesc, updatedImageUrl, prodId);
-  product.save().then(function (result) {
+  Product.findById(prodId).then(function (product) {
+    product.title = updatedTitle;
+    product.price = updatedPrice;
+    product.description = updatedDesc;
+    product.imageUrl = updatedImageUrl;
+    return product.save();
+  }).then(function (result) {
     console.log('UPDATED PRODUCT!');
     res.redirect('/admin/products');
   })["catch"](function (err) {
@@ -77,8 +93,9 @@ exports.postEditProduct = function (req, res, next) {
 };
 
 exports.postDeleteProduct = function (req, res, next) {
-  var prodId = req.body.productId;
-  Product.deleteById(prodId).then(function () {
+  var prodId = req.body.productId; //native Mongoose function... What about findByIdAndDelete()
+
+  Product.findByIdAndRemove(prodId).then(function () {
     console.log('DESTROYED PRODUCT');
     res.redirect('/admin/products');
   })["catch"](function (err) {

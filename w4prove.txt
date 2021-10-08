@@ -1,0 +1,29 @@
+After completing the assignment, be sure to push to Github and Heroku.
+Please answer the questions in this text file and submit it to I-Learn.
+
+1. Copy and paste the URL for your web application (e.g., Heroku): 
+	https://newell-ecommerce.herokuapp.com/
+
+2. Copy and paste the URL for your source code repository (e.g., GitHub): 	https://github.com/nancinewell/cse341EcommerceProject
+
+3. Briefly list and describe the elements of the application that are functioning. 
+	Connects to Mongodb using Mongoose, routes correctly, add and delete products from cart and product list, place orders
+
+4. Briefly describe any pieces of the assignment that are not yet working correctly.
+	None that I know of
+
+5. Briefly describe the "coolest" thing you learned while completing this assignment.
+	MongoDB has no "LIKE" functionality, but you can use regex to accomplish the same thing!
+
+6. If you could change this assignment to be more effective or helpful, what would you change? 
+	More practice. We follow the tutorial once and that gets us the assignment done. I go through and do it all again for the assignment without the tutorial (as much as I can) to better understand how things are connected, but there's too much material and not enough practice to really get the concepts down.
+
+7. Please select the category you feel best describes your assignment: 5
+   1 - Some attempt was made
+   2 - Developing, but significantly deficient
+   3 - Slightly deficient, but still mostly adequate
+   4 - Meets requirements
+   5 - Shows creativity and excels above and beyond requirements
+
+8. Provide a brief justification (1-2 sentences) for selecting that category.
+	I added totalPrice and date. I instituted a search function requiring all products have an extra field that brings the title to lower case, so it can be searched by lower case, allowing the user to type using all caps, some caps, or no caps... Then I discovered how to make the query itself case insensitive and implemented that instead. I also added an Add Another button on the Add Product page to submit the new product and bring you back to the Add Product page for those times when you're adding more than one product at a time... Wish I'd thought of that before I loaded my database.
