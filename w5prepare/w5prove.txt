@@ -1,0 +1,30 @@
+After completing the assignment, be sure to push to Github and Heroku.
+Please answer the questions in this text file and submit it to I-Learn.
+
+1. Copy and paste the URL for your web application (e.g., Heroku):
+	https://newell-ecommerce.herokuapp.com/
+
+2. Copy and paste the URL for your source code repository (e.g., GitHub):
+	https://github.com/nancinewell/cse341EcommerceProject
+
+3. Briefly list and describe the elements of the application that are functioning.
+	Users are stored in a db and can sign up, log in, log out; pages are displayed based on login status, csrf utilized, routes protected, users are redirected to login if they try to access pages that require user is logged in, errors are displayed upon unsuccessful signup or login, user is emailed upon successful signup (though sendgrid takes a long time to send it).
+
+4. Briefly describe any pieces of the assignment that are not yet working correctly.
+	None to my knowledge.
+
+5. Briefly describe the "coolest" thing you learned while completing this assignment.
+	csrf protection! How is this the first time I've heard of this??
+
+6. If you could change this assignment to be more effective or helpful, what would you change?
+	More practice. I always complete the tutorials, then go to my project and do it again to get a bit more practice.
+
+7. Please select the category you feel best describes your assignment: 5
+   1 - Some attempt was made
+   2 - Developing, but significantly deficient
+   3 - Slightly deficient, but still mostly adequate
+   4 - Meets requirements
+   5 - Shows creativity and excels above and beyond requirements
+
+8. Provide a brief justification (1-2 sentences) for selecting that category.
+	I added password match verification on signup, added name to the user model and use it in a welcome if the user is logged in. All "Above & Beyond" criteria met. Competed Assignment after completing tutorial to give myself more practice.
