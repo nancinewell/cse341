@@ -19,14 +19,14 @@ router.post('/login',
     .normalizeEmail()
     .trim()
     .custom((value, {req}) => {
-        User.findOne({email: value})
+        return User.findOne({email: value})
         .then(userDoc => {
             if(!userDoc){
             return Promise.reject('Email does not exist. Please sign up.');
             }
         })
     .catch(err => {
-        return Promise.reject('Email does not exist. Please sign up.');
+        //return Promise.reject('Email does not exist. Please sign up.');
     })
 }),
 
@@ -38,7 +38,7 @@ authController.postLogin);
 
 router.post('/signup', 
 [
-    check('email')
+    body('email')
     .isEmail().withMessage('Please enter a valid email')
     .normalizeEmail()
         .trim()
@@ -48,7 +48,7 @@ router.post('/signup',
     // }
     // return true;
 
-    User.findOne({email: value})
+    return User.findOne({email: value})
     .then(userDoc => {
         if(userDoc){
           return Promise.reject('Email already exists. Please log in.');
@@ -59,15 +59,14 @@ router.post('/signup',
     })
 }),
 body('confirmPassword').custom((value,{req}) => {
-    if(value !== req.body.password){
+    if(value != req.body.password){
         throw new Error('Passwords have to match!')
     }
+    return true;
 }),
 body('password', "This is the default error message for all of these validators")
     .isLength({min: 8})
     .isAlphanumeric()//don't really restrict passwords to alphanumeric!
-
-
 ], 
 authController.postSignup);
 

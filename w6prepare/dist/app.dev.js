@@ -50,25 +50,34 @@ app.use(session({
 app.use(csrfProtection);
 app.use(flash());
 app.use(function (req, res, next) {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+app.use(function (req, res, next) {
   if (!req.session.user) {
     return next();
   }
 
   User.findById(req.session.user._id).then(function (user) {
+    if (!user) {
+      return next();
+    }
+
     req.user = user;
     next();
   })["catch"](function (err) {
-    return console.log(err);
+    next(new Error(err));
   });
-});
-app.use(function (req, res, next) {
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
-  next();
 });
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
+app.get(errorController.get500); //or
+
+app.use(function (error, req, res, next) {
+  res.redirect('/500'); //or render with status code or anything else.
+});
 app.use(errorController.get404);
 var config = {
   autoIndex: false,

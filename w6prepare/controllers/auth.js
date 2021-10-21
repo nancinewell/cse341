@@ -34,7 +34,7 @@ exports.postLogin = (req, res, next) => {
 
     const errors = validationResult(req);
 if(!errors.isEmpty()){
-  res.status(422).render('auth/login', {
+  return res.status(422).render('auth/login', {
     path: '/login',
     pageTitle: 'Log In',
     isAuthenticated: false,
@@ -82,12 +82,11 @@ if(!errors.isEmpty()){
 
         
         
-      })
-      .catch(err => console.log(err));
+      })}
+      
     
     //res.setHeader('Set-Cookie', 'loggedIn = true;'); Expires=set-date; Max-Age=number-in-seconds; Secure; (page will only be served via https) HttpOnly; (cookie can't be accessed form clientside js. Malicious code can't read your cookie values) 
     
-};
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
@@ -120,7 +119,7 @@ exports.getSignup = (req, res, next) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
-      console.log(errors.array());
+      console.log`Errors line auth controller 122: ${errors.array()}`;
       return res.status(422).render('auth/signup', {
         path: '/signup',
         pageTitle: 'Signup',

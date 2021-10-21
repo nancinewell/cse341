@@ -1,5 +1,15 @@
 "use strict";
 
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["Message sent: ", ""]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["Message sent: ", ""]);
 
@@ -11,7 +21,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["Message sent: ", ""]);
+  var data = _taggedTemplateLiteral(["Errors line auth controller 122: ", ""]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -69,7 +79,7 @@ exports.postLogin = function (req, res, next) {
   var errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    res.status(422).render('auth/login', {
+    return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Log In',
       isAuthenticated: false,
@@ -124,10 +134,9 @@ exports.postLogin = function (req, res, next) {
       console.log(err);
       res.redirect('/login');
     });
-  })["catch"](function (err) {
-    return console.log(err);
-  }); //res.setHeader('Set-Cookie', 'loggedIn = true;'); Expires=set-date; Max-Age=number-in-seconds; Secure; (page will only be served via https) HttpOnly; (cookie can't be accessed form clientside js. Malicious code can't read your cookie values) 
-};
+  });
+}; //res.setHeader('Set-Cookie', 'loggedIn = true;'); Expires=set-date; Max-Age=number-in-seconds; Secure; (page will only be served via https) HttpOnly; (cookie can't be accessed form clientside js. Malicious code can't read your cookie values) 
+
 
 exports.postLogout = function (req, res, next) {
   req.session.destroy(function (err) {
@@ -166,7 +175,7 @@ exports.postSignup = function (req, res, next) {
   var errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    console.log(errors.array());
+    console.log(_templateObject(), errors.array());
     return res.status(422).render('auth/signup', {
       path: '/signup',
       pageTitle: 'Signup',
@@ -201,7 +210,7 @@ exports.postSignup = function (req, res, next) {
       if (err) {
         console.log("Error: ".concat(err));
       } else {
-        console.log(_templateObject(), info);
+        console.log(_templateObject2(), info);
       }
     });
   })["catch"](function (err) {
@@ -255,7 +264,7 @@ exports.postReset = function (req, res, next) {
         if (err) {
           console.log("Error line 179: ".concat(err));
         } else {
-          console.log(_templateObject2(), info);
+          console.log(_templateObject3(), info);
         }
       });
     })["catch"](function (err) {
