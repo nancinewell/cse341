@@ -10,14 +10,31 @@ var Product = require('../models/product');
 
 var Order = require('../models/orders');
 
+var ITEMS_PER_PAGE = 2;
+
 exports.getProducts = function (req, res, next) {
-  Product.find().then(function (products) {
-    console.log(products);
+  var page = +req.query.page;
+
+  if (!page) {
+    page = 1;
+  }
+
+  var totalItems;
+  Product.find().countDocuments().then(function (numProducts) {
+    totalItems = numProducts;
+    return Product.find().skip((page - 1) * ITEMS_PER_PAGE).limit(ITEMS_PER_PAGE);
+  }).then(function (products) {
     res.render('shop/product-list', {
       prods: products,
-      pageTitle: 'All Products',
+      pageTitle: 'Products',
       path: '/products',
-      isAuthenticated: req.session.isLoggedIn
+      isAuthenticated: req.session.isLoggedIn,
+      currentPage: page,
+      hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+      hasPreviousPage: page > 1,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
     });
   })["catch"](function (err) {
     console.log(err);
@@ -39,11 +56,28 @@ exports.getProduct = function (req, res, next) {
 };
 
 exports.getIndex = function (req, res, next) {
-  Product.find().then(function (products) {
+  var page = +req.query.page;
+
+  if (!page) {
+    page = 1;
+  }
+
+  var totalItems;
+  console.log(page);
+  Product.find().countDocuments().then(function (numProducts) {
+    totalItems = numProducts;
+    return Product.find().skip((page - 1) * ITEMS_PER_PAGE).limit(ITEMS_PER_PAGE);
+  }).then(function (products) {
     res.render('shop/index', {
       prods: products,
       pageTitle: 'Shop',
-      path: '/'
+      path: '/',
+      currentPage: page,
+      hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+      hasPreviousPage: page > 1,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
     });
   })["catch"](function (err) {
     console.log(err);

@@ -1,0 +1,24 @@
+After completing the assignment, be sure to push to Github and Heroku.
+Please answer the questions in this text file and submit it to I-Learn.
+
+1. Copy and paste the URL for your web application (e.g., Heroku):
+	https://newell-ecommerce.herokuapp.com/
+2. Copy and paste the URL for your source code repository (e.g., GitHub):
+	https://github.com/nancinewell/cse341EcommerceProject
+3. Briefly list and describe the elements of the application that are functioning. 
+	Authentication and authorization, reset password, security questions, crud, cart, orders.
+4. Briefly describe any pieces of the assignment that are not yet working correctly.
+	None that I know of. 
+5. Briefly describe the "coolest" thing you learned while completing this assignment.
+	figuring out how to apply the security questions to allow the user to reset their password without using sendgrid to email the user.
+6. If you could change this assignment to be more effective or helpful, what would you change?
+	More practice.
+7. Please select the category you feel best describes your assignment: 5
+   1 - Some attempt was made
+   2 - Developing, but significantly deficient
+   3 - Slightly deficient, but still mostly adequate
+   4 - Meets requirements
+   5 - Shows creativity and excels above and beyond requirements
+
+8. Provide a brief justification (1-2 sentences) for selecting that category.
+	I'm super proud of my security question implementation for the reset password functionality! I also checked the performance suggestions and modified based on that. 

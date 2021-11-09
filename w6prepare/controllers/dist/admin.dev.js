@@ -5,6 +5,8 @@ var Product = require('../models/product');
 var _require = require('express-validator'),
     validationResult = _require.validationResult;
 
+var ITEMS_PER_PAGE = 2;
+
 exports.getAddProduct = function (req, res, next) {
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
@@ -149,9 +151,19 @@ exports.postEditProduct = function (req, res, next) {
 };
 
 exports.getProducts = function (req, res, next) {
-  //find only products created by this user
+  var page = +req.query.page;
+
+  if (!page) {
+    page = 1;
+  }
+
+  var totalItems; //find only products created by this user
+
   Product.find({
     userId: req.user._id
+  }).countDocuments().then(function (numProducts) {
+    totalItems = numProducts;
+    return Product.find().skip((page - 1) * ITEMS_PER_PAGE).limit(ITEMS_PER_PAGE);
   }) // .select('title price -_id')
   // .populate('userId', 'name')
   .then(function (products) {
@@ -162,7 +174,13 @@ exports.getProducts = function (req, res, next) {
       path: '/admin/products',
       isAuthenticated: req.session.isLoggedIn,
       hasError: false,
-      errorMessage: null
+      errorMessage: null,
+      currentPage: page,
+      hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+      hasPreviousPage: page > 1,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
     });
   })["catch"](function (err) {
     return console.log(err);

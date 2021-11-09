@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const { validationResult } = require('express-validator');
+const ITEMS_PER_PAGE = 2;
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
@@ -149,8 +150,20 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
+  let page = +req.query.page
+  if(!page){
+    page = 1;
+  }
+  
+  let totalItems;
+
   //find only products created by this user
-  Product.find({userId: req.user._id})
+  Product.find({userId: req.user._id}).countDocuments().then(numProducts => {
+    totalItems = numProducts;
+    return Product.find()
+    .skip((page-1)* ITEMS_PER_PAGE)
+    .limit(ITEMS_PER_PAGE)
+  })
     // .select('title price -_id')
     // .populate('userId', 'name')
     .then(products => {
@@ -161,7 +174,13 @@ exports.getProducts = (req, res, next) => {
         path: '/admin/products',
         isAuthenticated: req.session.isLoggedIn,
         hasError: false,
-        errorMessage: null
+        errorMessage: null,
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
       });
     })
     .catch(err => console.log(err));

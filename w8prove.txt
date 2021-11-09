@@ -1,0 +1,17 @@
+Team 1 Project
+We met on Wednesday and were able to distribute assignments after completing some further planning. Eric had to leave early, so we assigned him something we felt he could do based on where he is in the tutorials. Jake set up the github repo and base files for the project. Tyson was more heavily involved in the planning of the project. I have completed most of my assignments as far as I can before the others complete theirs. I’m awaiting the Edit Link to make sure my controller function works. I haven’t completed CSS as the others’ pages are not up yet. I feel that most of our team is working well together and working hard. Eric is very busy, and is behind in the class, so his contributions are a bit less than everyone else. 
+
+Nanci	Set up Heroku/MongoDB 
+Nanci	Models 
+Nanci	CSS 
+Tyson	Modules: Header (with nav), Footer, Head (CSS for Nav) 
+Eric 	Index: Limit 10 for each collection. See details button. 
+Jake	Login/Logout 
+Jake	Signup 
+Nanci	Add/Edit Item – use ejs to select route based on item added 
+Jake 	User Profile 
+Mikhail Books page 
+Mikhail Movies page (with randomizer) 
+Mikhail Games page 
+ 
+

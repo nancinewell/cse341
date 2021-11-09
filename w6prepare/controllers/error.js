@@ -24,7 +24,7 @@ status codes
 400's = client-side error
   401 = Not Authenticated
   403 = Not authorized
-  404 = Not Foudn
+  404 = Not Found
   422 = Invalid Input
 
 500's = server-side error
